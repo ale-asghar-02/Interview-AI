@@ -1,0 +1,213 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+
+html , body , #root {
+    width: 100%;
+    height: 100%;
+}
+
+
+:root {
+  --indigo: #6366f1;
+  --purple: #a855f7;
+  --grad: linear-gradient(135deg, #6366f1, #a855f7);
+  --card-bg: rgba(113, 48, 48, 0.045);
+  --card-border: rgba(255,255,255,0.09);
+  --glow: 0 0 60px rgba(99,102,241,0.18);
+}
+
+
+input:focus {
+    box-shadow: none !important;
+}
+
+
+
+/* ══════════════════════════════════ GENERATE INTERVIEW REPORT CSS ═══════════════════════════════════ */
+
+.interview-section .badge-pill {
+  background: rgba(99,102,241,0.1);
+  border: 1px solid rgba(99,102,241,0.25);
+  color: #818cf8;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  animation: badgeUp 0.8s ease both;
+  width: fit-content;
+}
+
+.interview-section .interview-title {
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  animation: badgeUp 0.8s ease both;
+}
+.interview-section .interview-title .interview-highlight {
+  position: relative;
+  display: inline-block;
+}
+.interview-section .interview-title .interview-highlight .highlight-word {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.interview-section .interview-title .interview-highlight .underline-svg {
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 100%;
+  height: 18px;
+  overflow: visible;
+}
+.interview-section .interview-title .interview-highlight .underline-svg path {
+  stroke-dasharray: 360;
+  stroke-dashoffset: 360;
+  animation: interviewDrawLine 1.2s 0.5s ease forwards;
+}
+
+.interview-section .hero-sub {
+  animation: badgeUp 0.8s 0.15s ease both;
+}
+
+.interview-section .interview-form-section,
+.interview-section .interview-info-node,
+.interview-section .interview-footer-bar {
+    animation: badgeUp 0.8s ease both;
+}
+
+@keyframes interviewDrawLine {
+  to { stroke-dashoffset: 0; }
+}
+@keyframes badgeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.interview-section .interview-footer-bar .btn-interview {
+    color: #fff;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    border: none;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    padding-block: 12px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+.interview-section .interview-footer-bar .btn-interview .bubble {
+    position: absolute;
+    bottom: -40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.22);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.interview-section .interview-footer-bar .btn-interview .b1 { width: 10px; height: 10px; left: 10%; }
+.interview-section .interview-footer-bar .btn-interview .b2 { width: 18px; height: 18px; left: 25%; }
+.interview-section .interview-footer-bar .btn-interview .b3 { width: 8px;  height: 8px;  left: 42%; }
+.interview-section .interview-footer-bar .btn-interview .b4 { width: 22px; height: 22px; left: 58%; }
+.interview-section .interview-footer-bar .btn-interview .b5 { width: 12px; height: 12px; left: 72%; }
+.interview-section .interview-footer-bar .btn-interview .b6 { width: 16px; height: 16px; left: 85%; }
+
+.interview-section .interview-footer-bar .btn-interview:hover .bubble { opacity: 1; }
+.interview-section .interview-footer-bar .btn-interview:hover .b1 { animation: rise 1.1s ease-in infinite 0s; }
+.interview-section .interview-footer-bar .btn-interview:hover .b2 { animation: rise 1.3s ease-in infinite 0.2s; }
+.interview-section .interview-footer-bar .btn-interview:hover .b3 { animation: rise 1.0s ease-in infinite 0.5s; }
+.interview-section .interview-footer-bar .btn-interview:hover .b4 { animation: rise 1.4s ease-in infinite 0.1s; }
+.interview-section .interview-footer-bar .btn-interview:hover .b5 { animation: rise 1.2s ease-in infinite 0.4s; }
+.interview-section .interview-footer-bar .btn-interview:hover .b6 { animation: rise 0.9s ease-in infinite 0.7s; }
+
+@keyframes rise {
+    0%   { transform: translateY(0) scale(1);     opacity: 0; }
+    10%  { opacity: 0.7; }
+    80%  { opacity: 0.3; }
+    100% { transform: translateY(-70px) scale(1.1); opacity: 0; }
+}
+
+/* ════════════════════════════════════════════════════════════════════════════════════════════════════ */
+
+
+
+/* ═════════════════════════════════════ INTERVIEW REPORT CSS ═════════════════════════════════════════ */
+
+.interview-section .report-card-enter {
+  animation: cardIn 0.4s ease both;
+}
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.interview-section .report-card-enter .score-ring-circle {
+  animation: ringDraw 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+@keyframes ringDraw {
+  from { stroke-dashoffset: 346; }
+  to   { stroke-dashoffset: var(--ring-offset); }
+}
+
+.interview-section .report-card-enter .score-number {
+  animation: scorePop 0.5s 1s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+@keyframes scorePop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+/* ── Accordion answer slide down ─────────────── */
+.interview-section .report-card-enter .q-body {
+  animation: slideDown 0.22s ease;
+  overflow: hidden;
+}
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Roadmap phase dot pulse ─────────────────── */
+.interview-section .report-card-enter .phase-dot {
+  animation: pulseDot 2.4s ease-in-out infinite;
+}
+@keyframes pulseDot {
+  0%,100% { box-shadow: 0 0 0 0   rgba(99,102,241,0.5); }
+  50%     { box-shadow: 0 0 0 6px rgba(99,102,241,0);   }
+}
+
+/* ── Skill tag staggered pop-in ──────────────── */
+.interview-section .report-card-enter .skill-tag { animation: tagPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+.interview-section .report-card-enter .skill-tag:nth-child(1) { animation-delay: 0.05s; }
+.interview-section .report-card-enter .skill-tag:nth-child(2) { animation-delay: 0.12s; }
+.interview-section .report-card-enter .skill-tag:nth-child(3) { animation-delay: 0.19s; }
+.interview-section .report-card-enter .skill-tag:nth-child(4) { animation-delay: 0.26s; }
+@keyframes tagPop {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1);   }
+}
+
+/* ── Hero fade up ────────────────────────────── */
+.interview-section .report-card-enter .hero-fade         { animation: heroUp 0.55s ease both; }
+.interview-section .report-card-enter .hero-fade.delay-1 { animation-delay: 0.1s;  }
+.interview-section .report-card-enter .hero-fade.delay-2 { animation-delay: 0.22s; }
+@keyframes heroUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ── Nav item hover transition ───────────────── */
+.interview-section .report-card-enter .ir-nav-item { transition: background 0.18s, color 0.18s, border-color 0.18s; }
+
+/* ── Q chevron rotate ────────────────────────── */
+.interview-section .report-card-enter .q-chevron             { transition: transform 0.22s ease, color 0.18s; }
+.interview-section .report-card-enter .q-chevron.open        { transform: rotate(180deg); }
+
+/* ════════════════════════════════════════════════════════════════════════════════════════════════════ */
