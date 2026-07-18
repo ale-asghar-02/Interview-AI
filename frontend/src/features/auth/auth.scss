@@ -1,0 +1,212 @@
+/* ═════════════════════════════════════════ FORM PAGE CSS ═══════════════════════════════════════════ */
+
+.form-section .form-left-side {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  background: var(--grad);
+}
+
+//TODO ══════════════════════════════════ BASE SHAPE ══════════════════════════════════ */
+
+.form-section .form-left-side .ls-shape {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+//TODO ══════════════════════════════════ RECTANGLES ══════════════════════════════════ */
+
+/* Large rect – top left, slow rotation */
+.form-section .form-left-side .ls-rect-1 {
+  width: 160px;
+  height: 90px;
+  top: 50px;
+  left: -20px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.11);
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  box-shadow: 0 8px 36px rgba(99, 102, 241, 0.38);
+  animation: rotateFloat1 14s ease-in-out infinite;
+}
+
+/* Small rect – bottom center */
+.form-section .form-left-side .ls-rect-2 {
+  width: 80px;
+  height: 46px;
+  bottom: 110px;
+  left: 52%;
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1.5px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.32);
+  animation: rotateFloat2 10s ease-in-out infinite 1s;
+}
+
+/* DOT-FILLED RECTANGLE */
+.form-section .form-left-side .ls-rect-dots {
+  width: 130px;
+  height: 82px;
+  top: 40%;
+  right: 24px;
+  border-radius: 12px;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.50) 1.4px, transparent 1.4px);
+  background-size: 9px 9px;
+  animation: rotateFloat3 12s ease-in-out infinite;
+}
+
+
+//TODO ══════════════════════════════════ TRIANGLES ═══════════════════════════════════ */
+
+/* Large triangle – top right */
+.form-section .form-left-side .ls-tri-1 {
+  width: 0; height: 0;
+  top: 55px; right: 44px;
+  border-left: 48px solid transparent;
+  border-right: 48px solid transparent;
+  border-bottom: 82px solid rgba(255, 255, 255, 0.14);
+  filter: drop-shadow(0 6px 22px rgba(168, 85, 247, 0.42));
+  animation: rotateFloat1 13s ease-in-out infinite 0.5s;
+}
+
+/* Small triangle – bottom left */
+.form-section .form-left-side .ls-tri-2 {
+  width: 0; height: 0;
+  bottom: 75px; left: 55px;
+  border-left: 26px solid transparent;
+  border-right: 26px solid transparent;
+  border-bottom: 44px solid rgba(255, 255, 255, 0.11);
+  filter: drop-shadow(0 4px 15px rgba(99, 102, 241, 0.36));
+  animation: rotateFloat2 9s ease-in-out infinite 2s;
+}
+
+
+//TODO ═══════════════════════════════════ CIRCULES ═══════════════════════════════════ */
+
+/* Large circle – bottom right */
+.form-section .form-left-side .ls-circle-1 {
+  width: 180px; height: 180px;
+  bottom: -40px; right: -40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.09);
+  border: 2px solid rgba(255, 255, 255, 0.20);
+  box-shadow: 0 8px 44px rgba(168, 85, 247, 0.42);
+  animation: floatY 11s ease-in-out infinite;
+}
+
+/* Medium circle – center */
+.form-section .form-left-side .ls-circle-2 {
+  width: 80px; height: 80px;
+  top: 30%; left: 36%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
+  box-shadow: 0 4px 26px rgba(99, 102, 241, 0.30);
+  animation: floatX 8s ease-in-out infinite 1.5s;
+}
+
+/* Small solid circle */
+.form-section .form-left-side .ls-circle-sm {
+  width: 38px; height: 38px;
+  top: 20%; left: 16%;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.38);
+  animation: floatY 6s ease-in-out infinite 0.8s;
+}
+
+/* DOT-FILLED CIRCLE  (bigger) */
+.form-section .form-left-side .ls-circle-dots {
+  width: 160px; height: 160px;
+  top: 50%; left: 14px;
+  border-radius: 50%;
+  background-image: radial-gradient(circle, rgba(255,255,255,0.50) 1.4px, transparent 1.4px);
+  background-size: 9px 9px;
+  animation: floatY 60s ease-in-out infinite 1s;
+}
+
+
+//TODO ═════════════════════════════════════ STARS ════════════════════════════════════ */
+
+.form-section .form-left-side .ls-star {
+  background: rgba(255, 255, 255, 0.58);
+  clip-path: polygon(
+    50% 0%, 61% 35%, 98% 35%,
+    68% 57%, 79% 91%,
+    50% 70%, 21% 91%,
+    32% 57%, 2% 35%,
+    39% 35%
+  );
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.58));
+}
+
+/* Large star */
+.form-section .form-left-side .ls-star-1 {
+  width: 46px; height: 46px;
+  top: 17%; right: 12%;
+  animation: rotateStar 16s linear infinite, twinkle 3s ease-in-out infinite;
+}
+
+/* Medium star */
+.form-section .form-left-side .ls-star-2 {
+  width: 28px; height: 28px;
+  bottom: 28%; left: 25%;
+  animation: rotateStar 20s linear infinite reverse, twinkle 4s ease-in-out infinite 0.5s;
+}
+
+/* Small star */
+.form-section .form-left-side .ls-star-3 {
+  width: 16px; height: 16px;
+  top: 9%; left: 40%;
+  animation: rotateStar 12s linear infinite, twinkle 2.5s ease-in-out infinite 1s;
+}
+
+
+//TODO ═══════════════════════════════════ KEYFRAMES ══════════════════════════════════ */
+
+/* Rect / tri rotate + float combos */
+@keyframes rotateFloat1 {
+  0%   { transform: rotate(-18deg) translateY(0px); }
+  50%  { transform: rotate(-10deg) translateY(-16px); }
+  100% { transform: rotate(-18deg) translateY(0px); }
+}
+@keyframes rotateFloat2 {
+  0%   { transform: rotate(14deg) translateY(0px); }
+  50%  { transform: rotate(22deg) translateY(-12px); }
+  100% { transform: rotate(14deg) translateY(0px); }
+}
+@keyframes rotateFloat3 {
+  0%   { transform: rotate(-8deg) translateX(0px); }
+  50%  { transform: rotate(0deg) translateX(10px); }
+  100% { transform: rotate(-8deg) translateX(0px); }
+}
+
+
+/* Plain float */
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); transform: rotate(180deg); }
+  50%       { transform: translateY(-14px); }
+}
+@keyframes floatX {
+  0%, 100% { transform: translateX(0px); }
+  50%       { transform: translateX(11px); }
+}
+
+/* Star slow spin */
+@keyframes rotateStar {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1; }
+}
+
+
+//TODO ═══════════════════════════════════ CAROSUAL BULLETS ══════════════════════════════════ */
+
+.swiper-pagination-bullet-active {
+  width: 30px;
+  border-radius: 5px;
+  background: #000000;
+}
