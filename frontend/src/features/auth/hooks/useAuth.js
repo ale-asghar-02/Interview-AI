@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AuthContext } from "../AuthContext";
 import { login, register, logout, forgotPassword, resetPassword, googleAuth, UserUpdateProfile, UserDeleteAccount } from "../services/authAPI";
 import { toast } from "sonner";
