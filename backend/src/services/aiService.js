@@ -74,16 +74,18 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
 }
 
 async function generatePdfFromHtml(htmlContent) {
-  // ✅ Input check
   if (!htmlContent) {
     throw new Error('HTML content is required to generate PDF');
   }
 
   try {
-    const puppeteer = (await import('puppeteer')).default;
+    const chromium = require('@sparticuz/chromium');
+    const puppeteer = require('puppeteer-core');
 
     const browser = await puppeteer.launch({
-      args: ['--no-sandbox', '--disable-setuid-sandbox'], // ✅ Render pe zaroori hai
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
     });
 
     const page = await browser.newPage();
