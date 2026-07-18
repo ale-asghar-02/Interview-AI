@@ -2,7 +2,7 @@ const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const bcrypt = require("bcrypt");
 const userModel = require("../models/userModel");
-const transporter = require("./nodemailor");
+const { getTransporter } = require("./nodemailor");
 const logger = require("../utils/logger");
 
 passport.serializeUser((user, done) => {
@@ -47,18 +47,20 @@ passport.use(
           userImage: profile.photos[0]?.value,
         });
 
-        transporter
-          .sendMail({
-            from: `"Interview AI" <${process.env.EMAIL_USER}>`,
-            to: email,
-            subject: "Welcome to Interview AI! 🎉",
-            html: `
-            <h2>Welcome ${user.username}! 👋</h2>
-            <p>Your account has been created successfully.</p>
-            <p>Get ready for your next interview! 🚀</p>
-            <p><b>Interview AI Team</b></p>
-          `,
-          })
+        getTransporter()
+          .then((transporter) =>
+            transporter.sendMail({
+              from: `"Interview AI" <${process.env.EMAIL_USER}>`,
+              to: email,
+              subject: "Welcome to Interview AI! 🎉",
+              html: `
+              <h2>Welcome ${user.username}! 👋</h2>
+              <p>Your account has been created successfully.</p>
+              <p>Get ready for your next interview! 🚀</p>
+              <p><b>Interview AI Team</b></p>
+            `,
+            })
+          )
           .catch((err) => {
             logger.error(`Welcome email failed: ${err.message}`);
           });
