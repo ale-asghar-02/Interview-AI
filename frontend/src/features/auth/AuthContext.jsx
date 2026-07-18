@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
                     setUser(data.user);
                 }
             } catch (error) {
-
+                setUser(null)
             } finally {
                 setAuthLoading(false);
             }

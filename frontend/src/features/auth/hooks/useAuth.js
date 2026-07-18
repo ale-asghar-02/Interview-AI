@@ -116,5 +116,21 @@ export const useAuth = () => {
         }
     }
 
+    useEffect(() => {
+      const handlePageShow = async (event) => {
+        if (event.persisted) {
+          try {
+            const data = await getMe();
+            setUser(data && data.user ? data.user : null);
+          } catch (error) {
+            setUser(null);
+          }
+        }
+      };
+
+      window.addEventListener('pageshow', handlePageShow);
+      return () => window.removeEventListener('pageshow', handlePageShow);
+    }, [setUser]);
+  
     return { user, updateProfile, loading, handleRegister, handleLogin, handleLogout, handleForgetPassword, handleResetPassword, handleGoogleAuth, handleProfileUpdate, handleUserDeleteAccount };
 };
