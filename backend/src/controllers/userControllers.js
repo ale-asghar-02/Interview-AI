@@ -2,6 +2,7 @@ const userModel = require('../models/userModel');
 const interviewReportModel = require('../models/interviewReportModel');
 const cloudinary = require('../configs/cloudinary');
 const transporter = require('../configs/nodemailor');
+const { accountDeletedEmail } = require('../utils/emailTemplates');
 const logger = require('../utils/logger');
 
 const GetUserData = async (req, res, next) => {
@@ -96,20 +97,18 @@ const deleteUserAccount = async (req, res, next) => {
 
     await userModel.findByIdAndDelete(req.user.id);
 
-    transporter.sendMail({
+    // Non-blocking — email fail hone se delete fail nahi hona chahiye
+    const mail = accountDeletedEmail(user.username);
+    transporter
+      .sendMail({
         from: `"Interview AI" <${process.env.EMAIL_USER}>`,
         to: user.email,
-        subject: 'Your Interview AI Account Has Been Deleted',
-        html: `
-          <h2>Goodbye, ${user.username} 👋</h2>
-          <p>Your Interview AI account and all associated data have been permanently deleted.</p>
-          <p>If this wasn't you, please contact our support team immediately.</p>
-          <p>We're sad to see you go. You're always welcome back!</p>
-          <p><b>Interview AI</b></p>
-        `,
-      }).catch((mailErr) => {
-      logger.error(`Delete Account Email Error: ${mailErr.message}`);
-    });
+        subject: mail.subject,
+        html: mail.html,
+      })
+      .catch((mailErr) => {
+        logger.error(`Delete Account Email Error: ${mailErr.message}`);
+      });
 
     res.clearCookie('token', {
       httpOnly: true,

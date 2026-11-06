@@ -1,9 +1,11 @@
+const crypto = require("crypto");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const bcrypt = require("bcrypt");
 const userModel = require("../models/userModel");
 const transporter = require("./nodemailor");
 const logger = require("../utils/logger");
+const { welcomeEmail } = require("../utils/emailTemplates");
 
 passport.serializeUser((user, done) => {
   done(null, user._id);
@@ -40,24 +42,24 @@ passport.use(
           return done(null, user);
         }
 
+        // Random password: koi isse form se login nahi kar sakta
+        const randomPassword = crypto.randomBytes(32).toString("hex");
+
         user = await userModel.create({
           username: profile.displayName,
           email,
-          password: await bcrypt.hash("GOOGLE_AUTH", 10),
-          userImage: profile.photos[0]?.value,
+          password: await bcrypt.hash(randomPassword, 10),
+          userImage: profile.photos?.[0]?.value,
         });
 
+        // Non-blocking — email fail hone se signup fail nahi hona chahiye
+        const welcome = welcomeEmail(user.username);
         transporter
           .sendMail({
             from: `"Interview AI" <${process.env.EMAIL_USER}>`,
             to: email,
-            subject: "Welcome to Interview AI! 🎉",
-            html: `
-            <h2>Welcome ${user.username}! 👋</h2>
-            <p>Your account has been created successfully.</p>
-            <p>Get ready for your next interview! 🚀</p>
-            <p><b>Interview AI Team</b></p>
-          `,
+            subject: welcome.subject,
+            html: welcome.html,
           })
           .catch((err) => {
             logger.error(`Welcome email failed: ${err.message}`);

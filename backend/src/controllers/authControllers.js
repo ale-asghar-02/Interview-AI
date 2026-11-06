@@ -5,6 +5,9 @@ const userModel = require('../models/userModel');
 const blacklistTokenModel = require('../models/blacklistTokenModel');
 const transporter = require('../configs/nodemailor');
 const logger = require('../utils/logger');
+const { welcomeEmail, resetPasswordEmail, resetSuccessEmail } = require('../utils/emailTemplates');
+
+const FROM = `"Interview AI" <${process.env.EMAIL_USER}>`;
 
 const UserAuthRegister = async (req, res, next) => {
   try {
@@ -30,19 +33,17 @@ const UserAuthRegister = async (req, res, next) => {
     });
 
     // Non-blocking — agar email fail ho, registration fail nahi honi chahiye
-    transporter.sendMail({
-      from: `"Interview AI" <${process.env.EMAIL_USER}>`,
-      to: normalizedEmail,
-      subject: 'Welcome to Interview AI! 🎉',
-      html: `
-        <h2>Welcome ${username}! 👋</h2>
-        <p>Your account has been created successfully.</p>
-        <p>Get ready for your next interview! 🚀</p>
-        <p><b>Interview AI</b></p>
-      `,
-    }).catch((err) => {
-      logger.error(`Welcome email failed for ${normalizedEmail}: ${err.message}`);
-    });
+    const welcome = welcomeEmail(username);
+    transporter
+      .sendMail({
+        from: FROM,
+        to: normalizedEmail,
+        subject: welcome.subject,
+        html: welcome.html,
+      })
+      .catch((err) => {
+        logger.error(`Welcome email failed for ${normalizedEmail}: ${err.message}`);
+      });
 
     const token = jwt.sign(
       { id: user._id, username: user.username },
@@ -84,6 +85,11 @@ const UserAuthLogin = async (req, res, next) => {
 
     const user = await userModel.findOne({ email: normalizedEmail });
     if (!user) {
+      return res.status(401).json({ success: false, message: 'Invalid email or password' });
+    }
+
+    // Purane Google users ka password "GOOGLE_AUTH" hash tha, usse form login block karo
+    if (!user.password || password === 'GOOGLE_AUTH') {
       return res.status(401).json({ success: false, message: 'Invalid email or password' });
     }
 
@@ -162,22 +168,14 @@ const UserForgotPassword = async (req, res, next) => {
     await user.save();
 
     const resetLink = `${process.env.FRONTEND_URL}/user/reset-password/${rawToken}`;
+    const mail = resetPasswordEmail(user.username, resetLink);
 
     try {
       await transporter.sendMail({
-        from: `"Interview AI" <${process.env.EMAIL_USER}>`,
+        from: FROM,
         to: user.email,
-        subject: 'Password Reset Request',
-        html: `
-          <h2>Password Reset Request 🔒</h2>
-          <p>Hi ${user.username},</p>
-          <p>Click below to reset your password. Link expires in <b>15 minutes</b>.</p>
-          <br/>
-          <a href="${resetLink}" style="background-color:#4CAF50;color:white;padding:12px 24px;text-decoration:none;border-radius:5px;">Reset Password</a>
-          <br/><br/>
-          <p>If you did not request this, ignore this email.</p>
-          <p><b>Interview AI</b></p>
-        `,
+        subject: mail.subject,
+        html: mail.html,
       });
     } catch (mailErr) {
       // Email fail hui to token bhi rollback kar do, warna user reset nahi kar payega
@@ -185,7 +183,9 @@ const UserForgotPassword = async (req, res, next) => {
       user.resetPasswordExpire = undefined;
       await user.save();
       logger.error(`Reset email failed for ${user.email}: ${mailErr.message}`);
-      return res.status(502).json({ success: false, message: 'Failed to send reset email, try again' });
+      return res
+        .status(502)
+        .json({ success: false, message: 'Failed to send reset email, try again' });
     }
 
     res.status(200).json({ success: true, message: 'Password reset link sent to your email' });
@@ -221,18 +221,17 @@ const UserResetPassword = async (req, res, next) => {
     await user.save();
 
     // Non-blocking — confirmation email fail hone se reset fail nahi hona chahiye
-    transporter.sendMail({
-      from: `"Interview AI" <${process.env.EMAIL_USER}>`,
-      to: user.email,
-      subject: 'Password Reset Successful 🔒',
-      html: `
-        <h2>Password Reset Successful! ✅</h2>
-        <p>Hi ${user.username}, your password has been reset successfully.</p>
-        <p><b>Interview AI</b></p>
-      `,
-    }).catch((err) => {
-      logger.error(`Reset confirmation email failed for ${user.email}: ${err.message}`);
-    });
+    const done = resetSuccessEmail(user.username);
+    transporter
+      .sendMail({
+        from: FROM,
+        to: user.email,
+        subject: done.subject,
+        html: done.html,
+      })
+      .catch((err) => {
+        logger.error(`Reset confirmation email failed for ${user.email}: ${err.message}`);
+      });
 
     res.status(200).json({ success: true, message: 'Password reset successfully' });
   } catch (err) {
