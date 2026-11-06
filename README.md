@@ -2,7 +2,7 @@
 
 An AI-powered web application that analyzes your **resume**, **job description**, and **self-description** to generate a detailed **interview preparation report** and a **professional, job-tailored resume**.
 
-[![Live Demo](https://img.shields.io/badge/Live-Demo-brightgreen?style=for-the-badge)](YOUR_FRONTEND_URL)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-Visit_Site-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://interview-ai-snowy.vercel.app)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue?style=for-the-badge)](LICENSE)
 
 
@@ -35,13 +35,32 @@ An AI-powered web application that analyzes your **resume**, **job description**
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | React.js, Vite |
-| Backend | Node.js, Express.js |
-| Database | MongoDB Atlas |
-| AI | Google Gemini API |
-| Deployment | Vercel (frontend), Render (backend) |
+<table width="100%">
+  <tr>
+    <th width="50%" align="left">Layer</th>
+    <th width="50%" align="left">Technology</th>
+  </tr>
+  <tr>
+    <td>Frontend</td>
+    <td>React.js, Vite</td>
+  </tr>
+  <tr>
+    <td>Backend</td>
+    <td>Node.js, Express.js</td>
+  </tr>
+  <tr>
+    <td>Database</td>
+    <td>MongoDB Atlas</td>
+  </tr>
+  <tr>
+    <td>AI</td>
+    <td>Google Gemini API</td>
+  </tr>
+  <tr>
+    <td>Deployment</td>
+    <td>Vercel (frontend), Render (backend)</td>
+  </tr>
+</table>
 
 
 ## ⏳ Backend Status
