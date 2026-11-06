@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate , Link } from 'react-router'
 import { useAuth } from '../features/auth/hooks/useAuth.js'
 
-import defaultUserImg from "../assets/images/default.jpg";
+import defaultUserImg from "../assets/images/default.avif";
 
 const Navbar = () => {
   const navigate = useNavigate();

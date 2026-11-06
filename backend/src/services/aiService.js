@@ -74,36 +74,52 @@ async function generateInterviewReport({ resume, selfDescription, jobDescription
 }
 
 async function generatePdfFromHtml(htmlContent) {
+
   if (!htmlContent) {
     throw new Error('HTML content is required to generate PDF');
   }
 
-  try {
-    const chromium = (await import('@sparticuz/chromium')).default;
-    const puppeteer = (await import('puppeteer-core')).default;
+  let browser;
 
-    const browser = await puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-    });
+  try {
+    const puppeteer = (await import('puppeteer-core')).default;
+    const isProd = process.env.NODE_ENV === 'production';
+
+    if (isProd) {
+      // Render (Linux) pe
+      const chromium = (await import('@sparticuz/chromium')).default;
+      browser = await puppeteer.launch({
+        args: chromium.args,
+        executablePath: await chromium.executablePath(),
+        headless: chromium.headless,
+      });
+    } else {
+      // Local Windows pe, installed Chrome
+      browser = await puppeteer.launch({
+        executablePath:
+          process.env.CHROME_PATH ||
+          'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+        headless: true,
+      });
+    }
 
     const page = await browser.newPage();
     await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
 
     const pdfBuffer = await page.pdf({
       format: 'A4',
-      margin: { top: '10mm', bottom: '10mm', left: '10mm', right: '10mm', border: 'none' },
+      margin: { top: '10mm', bottom: '10mm', left: '10mm', right: '10mm' },
     });
 
-    await browser.close();
-
     logger.info('PDF generated successfully');
-    return pdfBuffer;
+    return Buffer.from(pdfBuffer);
 
   } catch (err) {
     logger.error(`PDF Generation Error: ${err.message}`);
     throw new Error('Failed to generate PDF, please try again');
+  } finally {
+    // Error aaye ya na aaye, browser hamesha band ho
+    if (browser) await browser.close();
   }
 }
 

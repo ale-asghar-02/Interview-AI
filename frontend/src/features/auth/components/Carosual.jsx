@@ -1,9 +1,9 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 
-import formImg1 from "../../../assets/images/form-img-1.png";
-import formImg2 from "../../../assets/images/form-img-2.png";
-import formImg3 from "../../../assets/images/form-img-3.png";
+import formImg1 from "../../../assets/images/form-img-1.avif";
+import formImg2 from "../../../assets/images/form-img-2.avif";
+import formImg3 from "../../../assets/images/form-img-3.avif";
 
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';

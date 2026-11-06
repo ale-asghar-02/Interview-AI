@@ -37,7 +37,7 @@ app.use(
       maxAge: 14 * 24 * 60 * 60 * 1000, // 14 days, in ms
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      sameSite: "lax",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
     },
   }),
 );
@@ -61,7 +61,7 @@ app.use(
 );
 
 //* Root Route (health check ke liye)
-app.get("/", (req, res) => {
+app.get("/api/ping", (req, res) => {
   res.status(200).json({ success: true, message: "Interview-AI API is running" });
 });
 

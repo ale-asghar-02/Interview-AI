@@ -4,7 +4,7 @@ import { useAuth } from "../features/auth/hooks/useAuth";
 import { useInterview } from "../features/interview/hooks/useInterview";
 
 import Swal from 'sweetalert2';
-import defaultUserImg from "../assets/images/default.jpg";
+import defaultUserImg from "../assets/images/default.avif";
 import documentAnalysisGif from "../assets/document-analysis.gif";
 
 const NAV = [
