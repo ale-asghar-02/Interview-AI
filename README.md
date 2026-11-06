@@ -37,8 +37,8 @@ An AI-powered web application that analyzes your **resume**, **job description**
 
 <table width="100%">
   <tr>
-    <th width="50%" align="left">Layer</th>
-    <th width="50%" align="left">Technology</th>
+    <th width="440px" align="left">Layer</th>
+    <th width="440px" align="left">Technology</th>
   </tr>
   <tr>
     <td>Frontend</td>
